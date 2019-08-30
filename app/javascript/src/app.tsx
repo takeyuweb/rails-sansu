@@ -199,29 +199,68 @@ const TaskScreen: React.SFC<TaskScreenProps> = props => {
     return null;
   }
 
-  const clickHandler = (result: number) => {
-    if (result === task.result) {
-      correct();
-    } else {
-      incorrect();
+  const [selectValue, setSelectValue] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (selectValue) {
+      const timeoutId = window.setTimeout(() => {
+        if (selectValue === task.result) {
+          correct();
+        } else {
+          incorrect();
+        }
+        setSelectValue(null);
+      }, 1000);
+
+      return () => {
+        window.clearTimeout(timeoutId);
+      };
     }
+  }, [selectValue]);
+
+  const clickHandler = (value: number) => {
+    setSelectValue(value);
   };
 
   const buttons = task.choices.map((choice, index) => {
+    let className;
+    let disabled = false;
+    if (selectValue) {
+      disabled = true;
+
+      if (choice.value == task.result) {
+        className = "correct";
+      } else {
+        className = "incorrect";
+      }
+    }
     return (
       <div key={index}>
-        <button onClick={() => clickHandler(choice.value)}>
+        <button
+          className={className}
+          disabled={disabled}
+          onClick={() => clickHandler(choice.value)}
+        >
           {choice.text}
         </button>
       </div>
     );
   });
 
+  let result;
+  if (selectValue) {
+    if (selectValue === task.result) {
+      result = <span className="correct">正解！</span>;
+    } else {
+      result = <span className="incorrect">不正解</span>;
+    }
+  }
+
   return (
     <div className="task">
       <p>
         <small>
-          第{game.index + 1}問（{timeSeconds}秒）
+          第{game.index + 1}問（{timeSeconds}秒）{result}
         </small>
       </p>
       <p className="text">{task.text}</p>

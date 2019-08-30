@@ -19,6 +19,14 @@ button {
     display: block;
     margin: 1em 0;
   }
+
+  .correct {
+    color: blue;
+  }
+
+  .incorrect {
+    color: red;
+  }
 }
 
 .score {

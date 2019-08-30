@@ -195,7 +195,9 @@ const ScoreScreen: React.SFC<ScoreScreenProps> = props => {
   }
 
   const seconds = (game.endedAt.getTime() - game.startedAt.getTime()) / 1000;
-  const score = Math.floor(Math.pow(game.correctCount, 5) / seconds);
+  const scoreBase = game.correctCount * 10;
+  const bonus = Math.floor(Math.pow(game.correctCount, 5) / seconds);
+  const score = scoreBase + bonus;
 
   return (
     <div>

@@ -162,8 +162,8 @@ const ScoreScreen: React.SFC<ScoreScreenProps> = props => {
         正解：{game.index}問中 {game.correctCount}問
       </p>
       <p>かかった時間：{seconds}秒</p>
-      <p>
-        得点：<b>{score}</b>
+      <p className="score">
+        <b>{score}</b> 点
       </p>
       <div>
         <button onClick={() => start()}>もう一度</button>
@@ -218,14 +218,14 @@ const TaskScreen: React.SFC<TaskScreenProps> = props => {
   });
 
   return (
-    <div>
+    <div className="task">
       <p>
         <small>
           第{game.index + 1}問（{timeSeconds}秒）
         </small>
       </p>
-      <p>{task.text}</p>
-      <b>{task.value}</b>
+      <p className="text">{task.text}</p>
+      <p className="value">{task.value}</p>
       {buttons}
     </div>
   );

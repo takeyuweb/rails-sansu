@@ -34,7 +34,7 @@ interface RoundTask {
 
 const tasks: RoundTask[] = [];
 
-[...Array(10)].forEach(() => {
+[...Array(7)].forEach(() => {
   const orderNumber = Math.floor(Math.random() * 3) + 2;
   const order = Math.pow(10, orderNumber);
   const roundNumber = order * (Math.floor(Math.random() * 90) + 10);
@@ -83,6 +83,48 @@ const tasks: RoundTask[] = [];
     })
   };
   tasks.push(task);
+});
+
+[...Array(3)].forEach(() => {
+  const orderNumber = Math.floor(Math.random() * 3) + 1;
+  const order = Math.pow(10, orderNumber);
+  const roundNumber = order * (Math.floor(Math.random() * 90) + 10);
+  const minValue = roundNumber - order / 2;
+  const maxValue = roundNumber + order / 2 - 1;
+
+  if (Math.random() > 0.5 || false) {
+    const fakeValue = maxValue + 1;
+    tasks.push({
+      text: `次の数は${order}の位までのがい数です。このがい数になる一番大きな数は？`,
+      value: roundNumber,
+      order: order,
+      result: maxValue,
+      choices: [
+        { value: fakeValue, text: `${fakeValue}` },
+        { value: minValue, text: `${minValue}` },
+        { value: maxValue, text: `${maxValue}` },
+        { value: roundNumber, text: `${roundNumber}` }
+      ].sort(function() {
+        return Math.random() - 0.5;
+      })
+    });
+  } else {
+    const fakeValue = minValue - 1;
+    tasks.push({
+      text: `次の数は${order}の位までのがい数です。このがい数になる一番小さな数は？`,
+      value: roundNumber,
+      order: order,
+      result: minValue,
+      choices: [
+        { value: fakeValue, text: `${fakeValue}` },
+        { value: minValue, text: `${minValue}` },
+        { value: maxValue, text: `${maxValue}` },
+        { value: roundNumber, text: `${roundNumber}` }
+      ].sort(function() {
+        return Math.random() - 0.5;
+      })
+    });
+  }
 });
 
 interface Game {

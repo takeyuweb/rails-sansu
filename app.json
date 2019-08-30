@@ -1,0 +1,40 @@
+{
+  "environments": {
+    "test": {
+      "env": {
+        "POSTGRESQL_VERSION": "11"
+      },
+      "addons": ["heroku-postgresql:in-dyno"],
+      "scripts": {
+        "test-setup": "bin/yarn"
+      }
+    }
+  },
+  "env": {
+    "LANG": {
+      "required": true
+    },
+    "RACK_ENV": {
+      "required": true
+    },
+    "RAILS_ENV": {
+      "required": true
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_MASTER_KEY": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    }
+  },
+  "scripts": {
+    "postdeploy": "DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:schema:load db:seed"
+  },
+  "addons": ["heroku-postgresql"]
+}
